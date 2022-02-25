@@ -15,10 +15,10 @@ Solution components are:
 ```
 git clone a copy of terraform
 ```
-git clone https://github.com/bkoohi/vpc-ha-pa-vsi-app.git
+git clone https://github.com/bkoohi/vpc-ha-pa-iks-app.git
 2. Change dir to downloaded directory
 ```
-cd vpc-ha-pa-vsi-app
+cd vpc-ha-pa-iks-app
 ```
 4. update variable.tf file with the following variables:
 ```
