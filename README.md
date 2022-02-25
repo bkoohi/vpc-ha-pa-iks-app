@@ -1,4 +1,4 @@
-# vpc-ha-pa-iks-app-
+# vpc-ha-pa-iks-app
 # Single VPC with HA Palo Alto Firewall with an IKS application container
 The purpose of this pattern to deploy an auto-scale simple web application, deploy an HA Palo Alto Firewall supported by NLB/ALB in a single VPC environment.
 Solution components are:
@@ -33,7 +33,11 @@ vi variable.tf
    - ibmcloud_api_key ued for environment deployment. 
       - Follow IBM Cloud procedure for creating new API key, if required: https://cloud.ibm.com/docs/account?topic=account-userapikey&interface=ui
    
-
+   - Update IKS variables:
+     - cluster_name
+     - machine_type
+     - workers_per_zone
+```
 
 5. Initialize terrform
 ```
@@ -56,7 +60,28 @@ cd scripts
 ./remote-vnf-setup.sh 150.240.66.11 admin P@rtal123 3bdeefaa-us-south.lb.appdomain.cloud ( an example )
 ```
 13. Apply Palo Alto licenses to both appliances. Login into Devices as admin, Devices --> Licenses --> Active feature using authentication code
-14. Test Web application: 
+14. Login in IBM cloud via CLI:
 ```
-curl -v hostname_public_alb 
+ibmcloud login -u ibm_cloud_id --apikey @apikey.json
+```
+15. Set the cloud region
+```
+ibmcloud target -r  ca-tor
+```
+16. List IKS clusters:
+```
+ibmcloud ks clusters
+```
+17. Identify IKS cluster ID and get its configuration parameters:
+```
+ ibmcloud ks cluster config -c cluster_id
+```
+18. Deploy test HTTPBIN app
+```
+kubectl apply -f httpbin_deploy_template.yaml 
+```
+19. Configure GLB app2
+19. Test Web application: 
+```
+curl -v app2.ibm-poc.com 
 ```
